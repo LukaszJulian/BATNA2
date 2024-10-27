@@ -10,7 +10,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 
 # Page configuration
 st.set_page_config(
-    page_title="BATNA Document Creator",
+    page_title="BATNA Assistant",
     page_icon="📋",
     layout="wide",
     initial_sidebar_state="expanded"
