@@ -146,7 +146,7 @@ def generate_batna_document():
 
     {input_data}
 
-    Please structure the response in these sections, providing detailed and actionable insights for each:
+    Please elaborate detailed and comprehensive answers to the below structured block and points after a very deep and thorough analysis of different scenarios has been carried out by you. If other points should be added within the blocks, please do so with a brief explanation of why:
 
     1. Client's BATNA & Vendors' BATNA
        - Analyze alternatives for both parties
