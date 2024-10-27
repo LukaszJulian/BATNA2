@@ -1,6 +1,7 @@
 import streamlit as st
 import anthropic
 from datetime import datetime
+from style import CUSTOM_CSS
 import io
 from docx import Document
 from reportlab.lib import colors
@@ -10,11 +11,14 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 
 # Page configuration
 st.set_page_config(
-    page_title="BATNA Assistant",
+    page_title="BATNA Document Creator",
     page_icon="📋",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Inject custom CSS once at the start
+st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 # Initialize session state
 def initialize_session_state():
