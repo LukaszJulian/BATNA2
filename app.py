@@ -142,49 +142,168 @@ def generate_batna_document():
     if not client:
         return
 
-    prompt = """Create a comprehensive BATNA document based on the following information:
+    prompt = """As an expert in procurement negotiations and BATNA analysis, create a comprehensive and strategic BATNA document based on the following information:
 
     {input_data}
 
-    Please elaborate detailed and comprehensive answers to the below structured block and points after a very deep and thorough analysis of different scenarios has been carried out by you. If other points should be added within the blocks, please do so with a brief explanation of why:
+    Please conduct a thorough analysis and provide an extensive, well-structured document following these sections:
 
-    1. Client's BATNA & Vendors' BATNA
-       - Analyze alternatives for both parties
-       - Evaluate strengths and weaknesses of each alternative
+    1. EXECUTIVE SUMMARY
+       - High-level overview of key findings
+       - Critical recommendations
+       - Strategic imperatives
+       - Expected outcomes and timeline
 
-    2. Risks & Contingency Plan
-       - Identify potential risks
-       - Provide specific mitigation strategies
-       - Include contingency plans for various scenarios
+    2. CLIENT'S BATNA ANALYSIS
+       A. Primary Alternatives
+          - Detailed analysis of each alternative
+          - Market impact assessment
+          - Cost-benefit analysis
+          - Implementation feasibility
+          - Timeline considerations
+       
+       B. Strengths Assessment
+          - Competitive advantages
+          - Market positioning
+          - Resource capabilities
+          - Financial leverage points
+       
+       C. Weaknesses Evaluation
+          - Vulnerability points
+          - Resource constraints
+          - Market limitations
+          - Timing challenges
 
-    3. Negotiation Strategy
-       - Outline key negotiation points
-       - Define strategic approach
-       - Set clear objectives and boundaries
+    3. VENDOR'S BATNA ANALYSIS
+       A. Likely Alternatives
+          - Competitor analysis
+          - Market opportunities
+          - Resource allocation possibilities
+          - Strategic partnerships
+       
+       B. Vendor Strengths
+          - Market position
+          - Technical capabilities
+          - Resource availability
+          - Financial stability
+       
+       C. Vendor Weaknesses
+          - Operational constraints
+          - Market pressures
+          - Resource limitations
+          - Competition threats
 
-    4. Negotiation Tactics
-       - Provide specific tactical recommendations
-       - Include timing and communication strategies
-       - Detail response scenarios
+    4. RISK ASSESSMENT & MITIGATION
+       A. Strategic Risks
+          - Market risks
+          - Operational risks
+          - Financial risks
+          - Relationship risks
+       
+       B. Mitigation Strategies
+          - Preventive measures
+          - Detection mechanisms
+          - Response protocols
+          - Recovery plans
+       
+       C. Contingency Planning
+          - Trigger events
+          - Action plans
+          - Resource allocation
+          - Communication protocols
 
-    5. Summary
-       - Provide a concise executive summary
-       - Include key recommendations
-       - Highlight critical success factors"""
+    5. NEGOTIATION STRATEGY
+       A. Strategic Framework
+          - Core objectives
+          - Non-negotiables
+          - Flexibility points
+          - Success criteria
+       
+       B. Power Dynamics
+          - Leverage points
+          - Influence factors
+          - Relationship dynamics
+          - Decision-making authority
+       
+       C. Value Creation Opportunities
+          - Joint value creation
+          - Trade-off possibilities
+          - Innovation opportunities
+          - Long-term benefits
+
+    6. NEGOTIATION TACTICS
+       A. Communication Strategy
+          - Key messages
+          - Timing considerations
+          - Channel selection
+          - Stakeholder management
+       
+       B. Response Scenarios
+          - Best case responses
+          - Worst case responses
+          - Counter-proposals
+          - Escalation protocols
+       
+       C. Timing Considerations
+          - Critical milestones
+          - Decision points
+          - Market timing
+          - Pressure points
+
+    7. IMPLEMENTATION ROADMAP
+       A. Timeline
+          - Pre-negotiation preparation
+          - Negotiation phases
+          - Implementation stages
+          - Review points
+       
+       B. Resource Requirements
+          - Team composition
+          - Required expertise
+          - Support resources
+          - Budget allocation
+       
+       C. Success Metrics
+          - KPIs
+          - Milestone achievements
+          - Value realization
+          - Relationship outcomes
+
+    8. RECOMMENDATIONS
+       A. Strategic Priorities
+          - Immediate actions
+          - Medium-term initiatives
+          - Long-term considerations
+       
+       B. Critical Success Factors
+          - Key enablers
+          - Risk factors
+          - Dependencies
+          - Support requirements
+
+    Please ensure:
+    - Each section contains detailed analysis supported by the provided information
+    - Practical and actionable recommendations are included
+    - Clear linkages between different sections are established
+    - Specific examples and scenarios are provided where relevant
+    - Quantitative and qualitative aspects are addressed
+    - Both short-term and long-term implications are considered
+
+    Format your response with:
+    - Clear headings and subheadings
+    - Bullet points for key information
+    - Numbered lists for sequential steps
+    - Bold text for critical points
+    - Professional and concise language
+    """
     
     formatted_data = "\n\n".join([f"{k.replace('_', ' ').title()}: {v}" 
                                  for k, v in st.session_state.collected_data.items()])
     
-    with st.spinner("Generating BATNA document using Claude 3 Sonnet..."):
+    with st.spinner("Generating comprehensive BATNA document using Claude 3.5..."):
         response = get_assistant_response(client, prompt.format(input_data=formatted_data))
         if response:
             st.session_state.final_document = response
-            # Add to history
-            st.session_state.document_history.append((
-                datetime.now(),
-                response,
-                st.session_state.collected_data.copy()
-            ))
             st.session_state.show_document = True
             st.rerun()
 
