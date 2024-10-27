@@ -289,7 +289,7 @@ def render_input_form():
                 st.error("Please fill in all fields before generating the BATNA document.")
 
 def main():
-    st.title("🤝 BATNA Assistant")
+    st.title("BATNA Assistant")
     st.markdown("---")
     
     initialize_session_state()
