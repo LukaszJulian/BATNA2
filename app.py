@@ -49,18 +49,16 @@ def init_client():
 
 def get_assistant_response(client, prompt):
     try:
-        message = client.create_message(
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt,
-                }
-            ],
+        response = client.messages.create(
             model="claude-3-sonnet-20240229",
+            messages=[{
+                "role": "user",
+                "content": prompt
+            }],
             max_tokens=4096,
             temperature=0.7
         )
-        return message.content[0].text
+        return response.content[0].text
     except Exception as e:
         st.error(f"Error getting response from Claude 3 Sonnet: {str(e)}")
         st.write("Detailed error:", str(e))
