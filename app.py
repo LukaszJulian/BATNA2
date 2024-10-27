@@ -167,15 +167,7 @@ def generate_batna_document():
        - Include timing and communication strategies
        - Detail response scenarios
 
-    5. Timeline
-       - Create a structured negotiation timeline
-       - Include key milestones and deadlines
-
-    6. Tools & Processes Used
-       - List recommended tools and methodologies
-       - Outline key processes to follow
-
-    7. Summary
+    5. Summary
        - Provide a concise executive summary
        - Include key recommendations
        - Highlight critical success factors"""
