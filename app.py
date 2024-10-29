@@ -177,17 +177,17 @@ def generate_batna_document():
 
 
     Please ensure:
-    1. Each section provides comprehensive analysis supported by the provided information
+    1. Each section provides deep and comprehensive analysis supported by the provided information
     2. Information flows logically between sections
     3. All recommendations are practical and actionable
     4. Both short-term and long-term implications are addressed
     5. The document maintains a professional, clear writing style
     6. Tables are used only where specified
     7. Bullet points are used only for clear step-by-step processes
-    8. Each section begins with a brief introduction paragraph
+    8. Each section begins with an introduction paragraph
 
     Format your response with:
-    - Clear section headings
+    - Clear bold section headings
     - Professional paragraph structure
     - Tables where specified
     - Numbered sequences where appropriate
