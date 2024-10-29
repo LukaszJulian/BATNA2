@@ -146,7 +146,7 @@ def generate_batna_document():
 
     {input_data}
 
-    Please conduct a thorough analysis and provide an extensive, well-structured document following these sections:
+    Carry out a very detailed and in-depth analysis based on user input. Then create very detailed and comprehensive answers according to the structure below:
 
     1. EXECUTIVE SUMMARY
        - High-level overview of key findings
