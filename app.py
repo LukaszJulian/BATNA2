@@ -54,7 +54,7 @@ def init_client():
 def get_assistant_response(client, prompt):
     try:
         response = client.messages.create(
-            model="Claude 3.5 Sonnet 2024-10-22",
+            model="claude-3-sonnet-20240307",
             messages=[{
                 "role": "user",
                 "content": prompt
