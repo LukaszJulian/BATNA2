@@ -129,6 +129,21 @@ def generate_pdf(content, filename):
     styles = getSampleStyleSheet()
     story = []
     
+    # Add custom styles
+    styles.add(ParagraphStyle(
+        'CustomHeading',
+        parent=styles['Heading1'],
+        fontSize=14,
+        spaceAfter=16
+    ))
+    
+    styles.add(ParagraphStyle(
+        'CustomBody',
+        parent=styles['Normal'],
+        fontSize=10,
+        spaceAfter=12
+    ))
+    
     # Add title
     title_style = ParagraphStyle(
         'CustomTitle',
@@ -141,17 +156,43 @@ def generate_pdf(content, filename):
     
     # Process content
     try:
-        paragraphs = content.split('\n\n')
-        for paragraph in paragraphs:
-            if paragraph.strip():
-                if paragraph.startswith('#') or any(paragraph.startswith(str(i)) for i in range(1, 9)):
-                    # Heading style
-                    story.append(Paragraph(paragraph, styles['Heading1']))
-                    story.append(Spacer(1, 12))
-                else:
-                    # Normal text style
-                    story.append(Paragraph(paragraph, styles['Normal']))
-                    story.append(Spacer(1, 6))
+        # Split content into sections
+        sections = content.split('\n')
+        current_text = ""
+        
+        for line in sections:
+            line = line.strip()
+            if not line:
+                if current_text:
+                    # Clean the text by removing problematic characters and HTML-like tags
+                    cleaned_text = (current_text
+                        .replace('|', ' - ')  # Replace table separators with dashes
+                        .replace('<br>', '\n')  # Replace HTML breaks with newlines
+                        .replace('>', '')  # Remove remaining angle brackets
+                        .replace('<', '')
+                    )
+                    
+                    # Check if it's a heading
+                    if cleaned_text.startswith(('1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.')):
+                        story.append(Paragraph(cleaned_text, styles['CustomHeading']))
+                    else:
+                        story.append(Paragraph(cleaned_text, styles['CustomBody']))
+                    
+                    story.append(Spacer(1, 8))
+                    current_text = ""
+            else:
+                current_text += " " + line if current_text else line
+        
+        # Add any remaining text
+        if current_text:
+            cleaned_text = (current_text
+                .replace('|', ' - ')
+                .replace('<br>', '\n')
+                .replace('>', '')
+                .replace('<', '')
+            )
+            story.append(Paragraph(cleaned_text, styles['CustomBody']))
+    
     except Exception as e:
         st.error(f"Error processing content for PDF: {str(e)}")
         return None
