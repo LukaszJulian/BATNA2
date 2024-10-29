@@ -150,67 +150,22 @@ def generate_batna_document():
 
     1. EXECUTIVE SUMMARY
        - High-level overview of key findings
-       - Critical recommendations
        - Strategic imperatives
-       - Expected outcomes and timeline
 
     2. CLIENT'S BATNA ANALYSIS
        A. Primary Alternatives
-          - Detailed analysis of each alternative
-          - Market impact assessment
-          - Cost-benefit analysis
-          - Implementation feasibility
-          - Timeline considerations
-       
-       B. Strengths Assessment
-          - Competitive advantages
-          - Market positioning
-          - Resource capabilities
-          - Financial leverage points
-       
+       B. Strengths Assessment       
        C. Weaknesses Evaluation
-          - Vulnerability points
-          - Resource constraints
-          - Market limitations
-          - Timing challenges
 
     3. VENDOR'S BATNA ANALYSIS
-       A. Likely Alternatives
-          - Competitor analysis
-          - Market opportunities
-          - Resource allocation possibilities
-          - Strategic partnerships
-       
-       B. Vendor Strengths
-          - Market position
-          - Technical capabilities
-          - Resource availability
-          - Financial stability
-       
+       A. Likely Alternatives       
+       B. Vendor Strengths    
        C. Vendor Weaknesses
-          - Operational constraints
-          - Market pressures
-          - Resource limitations
-          - Competition threats
 
     4. RISK ASSESSMENT & MITIGATION
-       A. Strategic Risks
-          - Market risks
-          - Operational risks
-          - Financial risks
-          - Relationship risks
-       
-       B. Mitigation Strategies
-          - Preventive measures
-          - Detection mechanisms
-          - Response protocols
-          - Recovery plans
-       
+       A. Strategic Risks    
+       B. Mitigation Strategies       
        C. Contingency Planning
-          - Trigger events
-          - Action plans
-          - Resource allocation
-          - Communication protocols
 
     5. NEGOTIATION STRATEGY
        A. Strategic Framework
@@ -218,18 +173,6 @@ def generate_batna_document():
           - Non-negotiables
           - Flexibility points
           - Success criteria
-       
-       B. Power Dynamics
-          - Leverage points
-          - Influence factors
-          - Relationship dynamics
-          - Decision-making authority
-       
-       C. Value Creation Opportunities
-          - Joint value creation
-          - Trade-off possibilities
-          - Innovation opportunities
-          - Long-term benefits
 
     6. NEGOTIATION TACTICS
        A. Communication Strategy
@@ -250,26 +193,7 @@ def generate_batna_document():
           - Market timing
           - Pressure points
 
-    7. IMPLEMENTATION ROADMAP
-       A. Timeline
-          - Pre-negotiation preparation
-          - Negotiation phases
-          - Implementation stages
-          - Review points
-       
-       B. Resource Requirements
-          - Team composition
-          - Required expertise
-          - Support resources
-          - Budget allocation
-       
-       C. Success Metrics
-          - KPIs
-          - Milestone achievements
-          - Value realization
-          - Relationship outcomes
-
-    8. RECOMMENDATIONS
+    7. RECOMMENDATIONS
        A. Strategic Priorities
           - Immediate actions
           - Medium-term initiatives
@@ -290,10 +214,11 @@ def generate_batna_document():
     - Both short-term and long-term implications are considered
 
     Format your response with:
-    - Clear headings and subheadings
-    - Bullet points for key information
+    - Clear bold headings and subheadings
+    - Formulated text with bullet points for key information where sensible
+    - Use table format where it makes sense, e.g. points 2,3 and 4
     - Numbered lists for sequential steps
-    - Bold text for critical points
+    - Bold and cursive text for critical points
     - Professional and concise language
     """
     
