@@ -153,35 +153,21 @@ def generate_batna_document():
 
     2. CLIENT'S BATNA ANALYSIS
     [This section requires a detailed examination of our position, focusing on all possible alternatives and their implications. Present this information in a clear table format that allows for quick comparison and understanding.]
-
     Present this as a table with three columns:
     | Alternatives Analysis | Strength Assessment | Weakness Evaluation |
 
     3. VENDOR'S BATNA ANALYSIS
     [This section should analyze the vendor's position with the same rigor as our own analysis. Consider their alternatives, strengths, and weaknesses from their perspective.]
-
     Present this as a table with three columns:
     | Alternative Options | Strength Areas | Weakness Areas |
 
-
     4. RISK ASSESSMENT & MITIGATION
     [This section should provide a comprehensive analysis of potential risks and corresponding mitigation strategies. It should demonstrate thorough consideration of all possible scenarios.]
-
     Present this as a table with three columns:
     | Risk Category | Mitigation Strategy | Contingency Plan |
 
     5. NEGOTIATION STRATEGY
     [This section should outline our comprehensive approach to the negotiation, detailing how we plan to achieve our objectives while maintaining positive relationships.]
-
-    Present this as flowing paragraphs covering:
-    - Strategic objectives and their rationale
-    - Core negotiation principles we will follow
-    - Key value propositions we will present
-    - Relationship management approach
-    - Definition of success criteria
-    - Power dynamics analysis
-    - Value creation opportunities
-    - Long-term relationship considerations
 
     6. NEGOTIATION TACTICS
     [This section should provide specific, actionable guidance on how to execute the negotiation strategy, including detailed response scenarios and timing considerations.]
