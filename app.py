@@ -149,77 +149,63 @@ def generate_batna_document():
     Carry out a very detailed and in-depth analysis based on user input. Then create very detailed and comprehensive answers according to the structure below:
 
     1. EXECUTIVE SUMMARY
-       - High-level overview of key findings
-       - Strategic imperatives
+    [This section should provide a clear, concise overview of the entire BATNA analysis. Focus on key findings, critical recommendations, and immediate action items. Write this in a way that executives can quickly grasp the situation and make informed decisions.]
 
     2. CLIENT'S BATNA ANALYSIS
-       A. Primary Alternatives
-       B. Strengths Assessment       
-       C. Weaknesses Evaluation
+    [This section requires a detailed examination of our position, focusing on all possible alternatives and their implications. Present this information in a clear table format that allows for quick comparison and understanding.]
+
+    Present this as a table with three columns:
+    | Alternatives Analysis | Strength Assessment | Weakness Evaluation |
 
     3. VENDOR'S BATNA ANALYSIS
-       A. Likely Alternatives       
-       B. Vendor Strengths    
-       C. Vendor Weaknesses
+    [This section should analyze the vendor's position with the same rigor as our own analysis. Consider their alternatives, strengths, and weaknesses from their perspective.]
+
+    Present this as a table with three columns:
+    | Alternative Options | Strength Areas | Weakness Areas |
+
 
     4. RISK ASSESSMENT & MITIGATION
-       A. Strategic Risks    
-       B. Mitigation Strategies       
-       C. Contingency Planning
+    [This section should provide a comprehensive analysis of potential risks and corresponding mitigation strategies. It should demonstrate thorough consideration of all possible scenarios.]
+
+    Present this as a table with three columns:
+    | Risk Category | Mitigation Strategy | Contingency Plan |
 
     5. NEGOTIATION STRATEGY
-       A. Strategic Framework
-          - Core objectives
-          - Non-negotiables
-          - Flexibility points
-          - Success criteria
+    [This section should outline our comprehensive approach to the negotiation, detailing how we plan to achieve our objectives while maintaining positive relationships.]
+
+    Present this as flowing paragraphs covering:
+    - Strategic objectives and their rationale
+    - Core negotiation principles we will follow
+    - Key value propositions we will present
+    - Relationship management approach
+    - Definition of success criteria
+    - Power dynamics analysis
+    - Value creation opportunities
+    - Long-term relationship considerations
 
     6. NEGOTIATION TACTICS
-       A. Communication Strategy
-          - Key messages
-          - Timing considerations
-          - Channel selection
-          - Stakeholder management
-       
-       B. Response Scenarios
-          - Best case responses
-          - Worst case responses
-          - Counter-proposals
-          - Escalation protocols
-       
-       C. Timing Considerations
-          - Critical milestones
-          - Decision points
-          - Market timing
-          - Pressure points
+    [This section should provide specific, actionable guidance on how to execute the negotiation strategy, including detailed response scenarios and timing considerations.]
 
     7. RECOMMENDATIONS
-       A. Strategic Priorities
-          - Immediate actions
-          - Medium-term initiatives
-          - Long-term considerations
-       
-       B. Critical Success Factors
-          - Key enablers
-          - Risk factors
-          - Dependencies
-          - Support requirements
+    [This section should synthesize the entire analysis into clear, actionable recommendations with supporting rationale.]
+
 
     Please ensure:
-    - Each section contains detailed analysis supported by the provided information
-    - Practical and actionable recommendations are included
-    - Clear linkages between different sections are established
-    - Specific examples and scenarios are provided where relevant
-    - Quantitative and qualitative aspects are addressed
-    - Both short-term and long-term implications are considered
+    1. Each section provides comprehensive analysis supported by the provided information
+    2. Information flows logically between sections
+    3. All recommendations are practical and actionable
+    4. Both short-term and long-term implications are addressed
+    5. The document maintains a professional, clear writing style
+    6. Tables are used only where specified
+    7. Bullet points are used only for clear step-by-step processes
+    8. Each section begins with a brief introduction paragraph
 
     Format your response with:
-    - Clear bold headings and subheadings
-    - Formulated text with bullet points for key information where sensible
-    - Use table format where it makes sense, e.g. points 2,3 and 4
-    - Numbered lists for sequential steps
-    - Bold and cursive text for critical points
-    - Professional and concise language
+    - Clear section headings
+    - Professional paragraph structure
+    - Tables where specified
+    - Numbered sequences where appropriate
+    - Consistent formatting throughout
     """
     
     formatted_data = "\n\n".join([f"{k.replace('_', ' ').title()}: {v}" 
