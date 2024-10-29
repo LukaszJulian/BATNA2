@@ -298,6 +298,16 @@ def render_input_form():
 
 def main():
     st.title("BATNA Assistant")
+    st.markdown("""
+    <div style='background-color: #EBF5FB; padding: 1rem; border-radius: 10px; border-left: 5px solid #2E86C1; margin-bottom: 2rem;'>
+        <p style='color: #2E86C1; font-size: 1.1em; margin-bottom: 0.5rem;'><strong>Professional BATNA Document Generator</strong></p>
+        <p style='font-size: 0.95em; color: #34495E; line-height: 1.5;'>
+            Leverage advanced AI to create detailed Best Alternative To a Negotiated Agreement (BATNA) documents. 
+            Our assistant helps procurement professionals analyze negotiation positions, assess risks, 
+            and develop strategic alternatives for successful negotiations.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     st.markdown("---")
     
     initialize_session_state()
