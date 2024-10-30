@@ -397,7 +397,7 @@ def generate_batna_document():
     [Present a detailed strategic approach to the negotiation, covering core objectives, non-negotiables, value creation opportunities, power dynamics, leverage points, and relationship management. The strategy should be well-reasoned and adaptable, taking into account the insights gained from the BATNA and risk analyses.]
 
     6. NEGOTIATION TACTICS
-    [Detail specific tactical recommendations for the negotiation, including opening positions, communication strategies, response scenarios, and timing considerations. The tactics should be aligned with the overall negotiation strategy and designed to maximize the client's chances of achieving a favorable outcome.]
+    [Detail specific tactical recommendations for the negotiation, including type of the process (e.g. single source, RFx, auction...), opening positions, communication strategies, response scenarios, and timing considerations. The tactics should be aligned with the overall negotiation strategy and designed to maximize the client's chances of achieving a favorable outcome.]
 
     7. RECOMMENDATIONS
     [Provide clear, actionable recommendations for the client, including immediate next steps, critical success factors, resource requirements, and expected outcomes. The recommendations should be based on the insights gained from the analysis and designed to help the client achieve their objectives in the negotiation.]
