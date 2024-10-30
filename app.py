@@ -311,9 +311,9 @@ def render_input_form():
         "scope_description": "Scope Description",
         "targets": "Targets to be Achieved",
         "vendors": "Vendors & Suppliers to be Invited",
-        "interests": "Client's Interests & Vendor's Interests",
-        "advantages": "Client's Negotiation Advantages & Vendors' Negotiation Advantages",
-        "disadvantages": "Client's Negotiation Disadvantages & Vendors' Negotiation Disadvantages"
+        "interests": "Client's & Vendor's Interests",
+        "advantages": "Client's & Vendors' Negotiation Advantages",
+        "disadvantages": "Client's & Vendors' Negotiation Disadvantages"
     }
     
     # Create form for all inputs
@@ -419,7 +419,7 @@ def generate_batna_document():
             st.rerun()
 
 def main():
-    st.title("🤝 BATNA Document Creation Assistant")
+    st.title("BATNA Assistant")
     
     # Professional description
     st.markdown("""
