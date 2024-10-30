@@ -2,6 +2,9 @@ import streamlit as st
 import anthropic
 from datetime import datetime
 import io
+from docx import Document
+from docx.shared import Inches, Pt
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -25,6 +28,52 @@ def initialize_session_state():
         st.session_state.show_document = False
     if 'document_history' not in st.session_state:
         st.session_state.document_history = []
+    # Initialize form inputs
+    sections = [
+        "negotiation_subject", "project_value", "company_profile", 
+        "scope_description", "targets", "vendors", "interests", 
+        "advantages", "disadvantages"
+    ]
+    for section in sections:
+        if f"input_{section}" not in st.session_state:
+            st.session_state[f"input_{section}"] = ""
+
+# Initialize the Anthropic client
+def init_client():
+    try:
+        api_key = st.secrets["ANTHROPIC_API_KEY"]
+        if not api_key:
+            st.error("API key not found in secrets.")
+            st.stop()
+            return None
+            
+        client = anthropic.Anthropic(api_key=api_key)
+        return client
+    except KeyError:
+        st.error("'ANTHROPIC_API_KEY' not found in Streamlit secrets. Please check your secrets configuration.")
+        st.stop()
+        return None
+    except Exception as e:
+        st.error(f"Failed to initialize Anthropic client. Error: {str(e)}")
+        st.stop()
+        return None
+
+def get_assistant_response(client, prompt):
+    try:
+        response = client.messages.create(
+            model="claude-3.5-sonnet-2024-10-22",
+            messages=[{
+                "role": "user",
+                "content": prompt
+            }],
+            max_tokens=4096,
+            temperature=0.7
+        )
+        return response.content[0].text
+    except Exception as e:
+        st.error(f"Error getting response from Claude 3.5: {str(e)}")
+        st.write("Detailed error:", str(e))
+        return None
 
 def save_to_history(document, data):
     """Save generated document to history with timestamp"""
@@ -77,44 +126,7 @@ def render_sidebar_history():
                 st.session_state.document_history = []
                 st.rerun()
 
-# Initialize the Anthropic client
-def init_client():
-    try:
-        api_key = st.secrets["ANTHROPIC_API_KEY"]
-        if not api_key:
-            st.error("API key not found in secrets.")
-            st.stop()
-            return None
-            
-        client = anthropic.Anthropic(api_key=api_key)
-        return client
-    except KeyError:
-        st.error("'ANTHROPIC_API_KEY' not found in Streamlit secrets. Please check your secrets configuration.")
-        st.stop()
-        return None
-    except Exception as e:
-        st.error(f"Failed to initialize Anthropic client. Error: {str(e)}")
-        st.stop()
-        return None
-
-def get_assistant_response(client, prompt):
-    try:
-        response = client.messages.create(
-            model="claude-3-opus-20240229",
-            messages=[{
-                "role": "user",
-                "content": prompt
-            }],
-            max_tokens=4096,
-            temperature=0.7
-        )
-        return response.content[0].text
-    except Exception as e:
-        st.error(f"Error getting response from Claude 3 Opus: {str(e)}")
-        st.write("Detailed error:", str(e))
-        return None
-
-# Simple and reliable PDF generator
+# Document Generation Functions
 def generate_pdf(content, filename):
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(
@@ -154,7 +166,6 @@ def generate_pdf(content, filename):
     story.append(Paragraph("BATNA Analysis Document", title_style))
     story.append(Spacer(1, 12))
     
-    # Process content
     try:
         # Split content into sections
         sections = content.split('\n')
@@ -164,11 +175,11 @@ def generate_pdf(content, filename):
             line = line.strip()
             if not line:
                 if current_text:
-                    # Clean the text by removing problematic characters and HTML-like tags
+                    # Clean the text
                     cleaned_text = (current_text
-                        .replace('|', ' - ')  # Replace table separators with dashes
-                        .replace('<br>', '\n')  # Replace HTML breaks with newlines
-                        .replace('>', '')  # Remove remaining angle brackets
+                        .replace('|', ' - ')
+                        .replace('<br>', '\n')
+                        .replace('>', '')
                         .replace('<', '')
                     )
                     
@@ -206,92 +217,91 @@ def generate_pdf(content, filename):
         st.error(f"Error building PDF: {str(e)}")
         return None
 
-def generate_batna_document():
-    client = init_client()
-    if not client:
-        return
-
-    prompt = """Create a comprehensive BATNA document based on the following information:
-
-    {input_data}
-
-    {
-  "systemInstruction": {
-    "introduction": "As an AI assistant, your task is to provide a comprehensive, well-structured analysis of a negotiation scenario between a client and a vendor. The analysis should cover various aspects, including the client's and vendor's Best Alternative To a Negotiated Agreement (BATNA), risk assessment and mitigation strategies, negotiation strategy and tactics, and an implementation roadmap. The analysis should be thorough, considering multiple scenarios and potential outcomes, and should include actionable recommendations for the client.",
-    "sections": [
-      {
-        "sectionName": "Executive Summary",
-        "sectionDescription": "In this section, provide a concise yet comprehensive overview of the entire analysis, highlighting the key findings and critical recommendations. The summary should be engaging and persuasive, encouraging the reader to delve into the details of the analysis.",
-        "outputFormat": "text"
-      },
-      {
-        "sectionName": "Client's BATNA Analysis",
-        "sectionDescription": "Following the table, present a detailed analysis of each viable alternative available to the client. Consider factors such as implementation feasibility, cost implications, and strategic fit. The analysis should provide a clear understanding of the client's position and the potential outcomes of pursuing alternative options.",
-        "outputFormat": "table",
-        "tableHeaders": [
-          "Alternative Options",
-          "Strength Assessment",
-          "Risk Assessment"
-        ]
-      },
-      {
-        "sectionName": "Vendor's BATNA Analysis",
-        "sectionDescription": "After the table, analyze the vendor's alternatives, market position, and potential responses to different scenarios. This analysis should provide insights into the vendor's strengths, weaknesses, and likely negotiation strategies.",
-        "outputFormat": "table",
-        "tableHeaders": [
-          "Market Position",
-          "Vendor Capabilities",
-          "Constraints Analysis"
-        ]
-      },
-      {
-        "sectionName": "Risk Assessment & Mitigation",
-        "sectionDescription": "Following the table, provide a comprehensive analysis of potential risks associated with the negotiation and the proposed mitigation strategies. Consider various risk categories, such as financial, operational, and reputational risks. The analysis should demonstrate a proactive approach to risk management and contingency planning.",
-        "outputFormat": "table",
-        "tableHeaders": [
-          "Risk Category",
-          "Mitigation Strategy",
-          "Contingency Plan"
-        ]
-      },
-      {
-        "sectionName": "Negotiation Strategy",
-        "sectionDescription": "Present a detailed strategic approach to the negotiation, covering core objectives, non-negotiables, value creation opportunities, power dynamics, leverage points, and relationship management. The strategy should be well-reasoned and adaptable, taking into account the insights gained from the BATNA and risk analyses.",
-        "outputFormat": "text"
-      },
-      {
-        "sectionName": "Negotiation Tactics",
-        "sectionDescription": "Detail specific tactical recommendations for the negotiation, including opening positions, communication strategies, response scenarios, and timing considerations. The tactics should be aligned with the overall negotiation strategy and designed to maximize the client's chances of achieving a favorable outcome.",
-        "outputFormat": "text"
-      },
-      {
-        "sectionName": "Implementation Roadmap",
-        "sectionDescription": "Outline a clear implementation plan for the negotiated agreement, including key milestones, timelines, resource requirements, success metrics, and review points. The roadmap should be realistic and achievable, taking into account the client's capabilities and constraints.",
-        "outputFormat": "text"
-      },
-      {
-        "sectionName": "Recommendations",
-        "sectionDescription": "Provide clear, actionable recommendations for the client, including immediate next steps, critical success factors, resource requirements, and expected outcomes. The recommendations should be based on the insights gained from the analysis and designed to help the client achieve their objectives in the negotiation.",
-        "outputFormat": "text"
-      }
-    ],
-    "formatting": {
-      "headingFormat": "bold and larger than normal text",
-      "dividerAfterSection": true
-    }
-  }
-}"""
+def generate_word_doc(content, filename):
+    """Generate a formatted Word document"""
+    doc = Document()
     
-    formatted_data = "\n\n".join([f"{k.replace('_', ' ').title()}: {v}" 
-                                 for k, v in st.session_state.collected_data.items()])
+    # Add title
+    title = doc.add_heading('BATNA Analysis Document', 0)
+    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
     
-    with st.spinner("Generating BATNA document..."):
-        response = get_assistant_response(client, prompt.format(input_data=formatted_data))
-        if response:
-            st.session_state.final_document = response
-            save_to_history(response, st.session_state.collected_data)
-            st.session_state.show_document = True
-            st.rerun()
+    # Add date
+    date_paragraph = doc.add_paragraph()
+    date_paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    date_paragraph.add_run(datetime.now().strftime("%Y-%m-%d")).italic = True
+    
+    doc.add_paragraph()  # Add spacing
+    
+    try:
+        # Split content into sections
+        sections = content.split('\n')
+        current_text = ""
+        
+        for line in sections:
+            line = line.strip()
+            if not line:
+                if current_text:
+                    # Clean the text
+                    cleaned_text = (current_text
+                        .replace('|', ' - ')
+                        .replace('<br>', '\n')
+                        .replace('>', '')
+                        .replace('<', '')
+                    )
+                    
+                    # Check if it's a heading
+                    if cleaned_text.startswith(('1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.')):
+                        doc.add_heading(cleaned_text, level=1)
+                    else:
+                        doc.add_paragraph(cleaned_text)
+                    
+                    current_text = ""
+            else:
+                current_text += " " + line if current_text else line
+        
+        # Add any remaining text
+        if current_text:
+            cleaned_text = (current_text
+                .replace('|', ' - ')
+                .replace('<br>', '\n')
+                .replace('>', '')
+                .replace('<', '')
+            )
+            doc.add_paragraph(cleaned_text)
+        
+        # Save to buffer
+        buffer = io.BytesIO()
+        doc.save(buffer)
+        buffer.seek(0)
+        return buffer.getvalue()
+        
+    except Exception as e:
+        st.error(f"Error generating Word document: {str(e)}")
+        return None
+
+def generate_text_doc(content):
+    """Generate a plain text document"""
+    try:
+        # Clean and format the content
+        cleaned_content = (content
+            .replace('|', ' - ')
+            .replace('<br>', '\n')
+            .replace('>', '')
+            .replace('<', '')
+        )
+        
+        # Add header
+        text_content = f"""BATNA ANALYSIS DOCUMENT
+Generated on: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+{'='*50}\n\n"""
+        
+        text_content += cleaned_content
+        
+        return text_content.encode('utf-8')
+        
+    except Exception as e:
+        st.error(f"Error generating text document: {str(e)}")
+        return None
 
 def render_input_form():
     sections = {
@@ -323,7 +333,7 @@ def render_input_form():
                 st.subheader(title)
                 value = st.text_area(
                     "Enter information:",
-                    value=st.session_state.collected_data.get(key, ""),
+                    value=st.session_state.get(f"input_{key}", ""),
                     height=150,
                     key=f"input_{key}",
                     label_visibility="collapsed"
@@ -339,7 +349,7 @@ def render_input_form():
                 st.subheader(title)
                 value = st.text_area(
                     "Enter information:",
-                    value=st.session_state.collected_data.get(key, ""),
+                    value=st.session_state.get(f"input_{key}", ""),
                     height=150,
                     key=f"input_{key}",
                     label_visibility="collapsed"
@@ -358,6 +368,82 @@ def render_input_form():
                 generate_batna_document()
             else:
                 st.error("Please fill in all fields before generating the BATNA document.")
+
+def generate_batna_document():
+    client = init_client()
+    if not client:
+        return
+
+    prompt = """Create a comprehensive BATNA document based on the following information:
+
+    {input_data}
+
+    Please elaborate detailed and comprehensive answers to the below structured block and points after a very deep and thorough analysis of different scenarios has been carried out by you. If other points should be added within the blocks, please do so with a brief explanation of why:
+
+    1. EXECUTIVE SUMMARY
+    [This section should provide a concise yet comprehensive overview of the entire analysis, key findings, and critical recommendations.]
+
+    2. CLIENT'S BATNA ANALYSIS
+    Present a detailed analysis of:
+    - Available alternatives and their viability
+    - Strengths and capabilities assessment
+    - Implementation considerations
+    - Cost-benefit analysis of each option
+
+    3. VENDOR'S BATNA ANALYSIS
+    Analyze thoroughly:
+    - Vendor's alternatives and market position
+    - Their strengths and capabilities
+    - Potential responses to different scenarios
+    - Their constraints and limitations
+
+    4. RISK ASSESSMENT & MITIGATION
+    Provide comprehensive analysis of:
+    - Strategic risks and their impact
+    - Operational considerations
+    - Mitigation strategies
+    - Contingency plans
+
+    5. NEGOTIATION STRATEGY
+    Detail the strategic approach including:
+    - Core objectives and non-negotiables
+    - Value creation opportunities
+    - Power dynamics analysis
+    - Relationship management strategy
+
+    6. NEGOTIATION TACTICS
+    Outline specific tactical recommendations:
+    - Opening positions and rationale
+    - Communication strategies
+    - Response scenarios
+    - Timing considerations
+
+    7. IMPLEMENTATION ROADMAP
+    Provide a structured plan including:
+    - Key milestones and timelines
+    - Resource requirements
+    - Success metrics
+    - Review points
+
+    8. RECOMMENDATIONS
+    Conclude with:
+    - Primary recommendations
+    - Critical success factors
+    - Resource requirements
+    - Next steps
+
+    Please provide a well-structured, professional document with clear sections and detailed analysis."""
+    
+    formatted_data = "\n\n".join([f"{k.replace('_', ' ').title()}: {v}" 
+                                 for k, v in st.session_state.collected_data.items()])
+    
+    with st.spinner("Generating BATNA document..."):
+        response = get_assistant_response(client, prompt.format(input_data=formatted_data))
+        if response:
+            st.session_state.final_document = response
+            save_to_history(response, st.session_state.collected_data)
+            st.session_state.show_document = True
+            st.rerun()
 
 def main():
     st.title("🤝 BATNA Document Creation Assistant")
@@ -400,7 +486,7 @@ def main():
             st.markdown("---")
             st.subheader("Export Options")
             
-            col1, col2 = st.columns(2)
+            col1, col2, col3, col4 = st.columns(4)
             
             with col1:
                 if st.button("Create New Document", use_container_width=True):
@@ -417,6 +503,26 @@ def main():
                     use_container_width=True
                 ):
                     st.success("PDF downloaded successfully!")
+            
+            with col3:
+                if st.download_button(
+                    label="Download as Word",
+                    data=generate_word_doc(st.session_state.final_document, "BATNA_document.docx"),
+                    file_name=f"BATNA_document_{datetime.now().strftime('%Y%m%d_%H%M%S')}.docx",
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    use_container_width=True
+                ):
+                    st.success("Word document downloaded successfully!")
+            
+            with col4:
+                if st.download_button(
+                    label="Download as Text",
+                    data=generate_text_doc(st.session_state.final_document),
+                    file_name=f"BATNA_document_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
+                    mime="text/plain",
+                    use_container_width=True
+                ):
+                    st.success("Text document downloaded successfully!")
 
 if __name__ == "__main__":
     main()
