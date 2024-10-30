@@ -215,52 +215,72 @@ def generate_batna_document():
 
     {input_data}
 
-    Please elaborate detailed and comprehensive answers to the below structured block and points after a very deep and thorough analysis of different scenarios has been carried out by you. If other points should be added within the blocks, please do so with a brief explanation of why:
-
-    1. EXECUTIVE SUMMARY
-    [This section should provide a concise yet comprehensive overview of the entire analysis, key findings, and critical recommendations.]
-
-    2. CLIENT'S BATNA ANALYSIS
-    | Alternative Options | Strength Assessment | Risk Assessment |
-    Present a detailed analysis of each viable alternative, including implementation feasibility, cost implications, and strategic fit.
-
-    3. VENDOR'S BATNA ANALYSIS
-    | Market Position | Vendor Capabilities | Constraints Analysis |
-    Analyze the vendor's alternatives, market position, and potential responses to different scenarios.
-
-    4. RISK ASSESSMENT & MITIGATION
-    | Risk Category | Mitigation Strategy | Contingency Plan |
-    Provide a comprehensive analysis of potential risks and detailed mitigation strategies.
-
-    5. NEGOTIATION STRATEGY
-    Present a detailed strategic approach covering:
-    - Core objectives and non-negotiables
-    - Value creation opportunities
-    - Power dynamics and leverage points
-    - Relationship management approach
-
-    6. NEGOTIATION TACTICS
-    Detail specific tactical recommendations including:
-    - Opening positions
-    - Communication strategies
-    - Response scenarios
-    - Timing considerations
-
-    7. IMPLEMENTATION ROADMAP
-    Outline a clear implementation plan with:
-    - Key milestones and timelines
-    - Resource requirements
-    - Success metrics
-    - Review points
-
-    8. RECOMMENDATIONS
-    Provide clear, actionable recommendations with:
-    - Immediate next steps
-    - Critical success factors
-    - Resource requirements
-    - Expected outcomes
-
-    Format the response professionally, using clear headings and maintaining a structured, business-appropriate tone throughout."""
+    {
+  "systemInstruction": {
+    "introduction": "As an AI assistant, your task is to provide a comprehensive, well-structured analysis of a negotiation scenario between a client and a vendor. The analysis should cover various aspects, including the client's and vendor's Best Alternative To a Negotiated Agreement (BATNA), risk assessment and mitigation strategies, negotiation strategy and tactics, and an implementation roadmap. The analysis should be thorough, considering multiple scenarios and potential outcomes, and should include actionable recommendations for the client.",
+    "sections": [
+      {
+        "sectionName": "Executive Summary",
+        "sectionDescription": "In this section, provide a concise yet comprehensive overview of the entire analysis, highlighting the key findings and critical recommendations. The summary should be engaging and persuasive, encouraging the reader to delve into the details of the analysis.",
+        "outputFormat": "text"
+      },
+      {
+        "sectionName": "Client's BATNA Analysis",
+        "sectionDescription": "Following the table, present a detailed analysis of each viable alternative available to the client. Consider factors such as implementation feasibility, cost implications, and strategic fit. The analysis should provide a clear understanding of the client's position and the potential outcomes of pursuing alternative options.",
+        "outputFormat": "table",
+        "tableHeaders": [
+          "Alternative Options",
+          "Strength Assessment",
+          "Risk Assessment"
+        ]
+      },
+      {
+        "sectionName": "Vendor's BATNA Analysis",
+        "sectionDescription": "After the table, analyze the vendor's alternatives, market position, and potential responses to different scenarios. This analysis should provide insights into the vendor's strengths, weaknesses, and likely negotiation strategies.",
+        "outputFormat": "table",
+        "tableHeaders": [
+          "Market Position",
+          "Vendor Capabilities",
+          "Constraints Analysis"
+        ]
+      },
+      {
+        "sectionName": "Risk Assessment & Mitigation",
+        "sectionDescription": "Following the table, provide a comprehensive analysis of potential risks associated with the negotiation and the proposed mitigation strategies. Consider various risk categories, such as financial, operational, and reputational risks. The analysis should demonstrate a proactive approach to risk management and contingency planning.",
+        "outputFormat": "table",
+        "tableHeaders": [
+          "Risk Category",
+          "Mitigation Strategy",
+          "Contingency Plan"
+        ]
+      },
+      {
+        "sectionName": "Negotiation Strategy",
+        "sectionDescription": "Present a detailed strategic approach to the negotiation, covering core objectives, non-negotiables, value creation opportunities, power dynamics, leverage points, and relationship management. The strategy should be well-reasoned and adaptable, taking into account the insights gained from the BATNA and risk analyses.",
+        "outputFormat": "text"
+      },
+      {
+        "sectionName": "Negotiation Tactics",
+        "sectionDescription": "Detail specific tactical recommendations for the negotiation, including opening positions, communication strategies, response scenarios, and timing considerations. The tactics should be aligned with the overall negotiation strategy and designed to maximize the client's chances of achieving a favorable outcome.",
+        "outputFormat": "text"
+      },
+      {
+        "sectionName": "Implementation Roadmap",
+        "sectionDescription": "Outline a clear implementation plan for the negotiated agreement, including key milestones, timelines, resource requirements, success metrics, and review points. The roadmap should be realistic and achievable, taking into account the client's capabilities and constraints.",
+        "outputFormat": "text"
+      },
+      {
+        "sectionName": "Recommendations",
+        "sectionDescription": "Provide clear, actionable recommendations for the client, including immediate next steps, critical success factors, resource requirements, and expected outcomes. The recommendations should be based on the insights gained from the analysis and designed to help the client achieve their objectives in the negotiation.",
+        "outputFormat": "text"
+      }
+    ],
+    "formatting": {
+      "headingFormat": "bold and larger than normal text",
+      "dividerAfterSection": true
+    }
+  }
+}"""
     
     formatted_data = "\n\n".join([f"{k.replace('_', ' ').title()}: {v}" 
                                  for k, v in st.session_state.collected_data.items()])
