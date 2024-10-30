@@ -385,10 +385,10 @@ def generate_batna_document():
     [In this section, provide a concise yet comprehensive overview of the entire analysis, highlighting the key findings and critical recommendations. The summary should be engaging and persuasive, encouraging the reader to delve into the details of the analysis.]
 
     2. CLIENT'S BATNA ANALYSIS
-    [Format: table with following columns: Alternative, OptionsStrength, AssessmentRisk Assessment. Instruction: Following the table, present a detailed analysis of each viable alternative available to the client. Consider factors such as implementation feasibility, cost implications, and strategic fit. The analysis should provide a clear understanding of the client's position and the potential outcomes of pursuing alternative options.]
+    [Format: table with following columns: Alternative Options, Strength Assessment, Risk Assessment. Instruction: Following the table, present a detailed analysis of each viable alternative available to the client. Consider factors such as implementation feasibility, cost implications, and strategic fit. The analysis should provide a clear understanding of the client's position and the potential outcomes of pursuing alternative options.]
 
     3. VENDOR'S BATNA ANALYSIS
-    [Format: table with following columns: Market Position, Vendor Capabilities, Constraints Analysis. Instruction: After the table, analyze the vendor's alternatives, market position, and potential responses to different scenarios. This analysis should provide insights into the vendor's strengths, weaknesses, and likely negotiation strategies.]
+    [Format: table with following columns: Alternative Options, Strength Assessment, Risk Assessment. Instruction: After the table, analyze the vendor's alternatives, market position, and potential responses to different scenarios. This analysis should provide insights into the vendor's strengths, weaknesses, and likely negotiation strategies.]
 
     4. RISK ASSESSMENT & MITIGATION
     [Format: table with following columns: Risk Category, Mitigation Strategy, Contingency Plan. Instruction: Following the table, provide a comprehensive analysis of potential risks associated with the negotiation and the proposed mitigation strategies. Consider various risk categories, such as financial, operational, and reputational risks. The analysis should demonstrate a proactive approach to risk management and contingency planning.]
