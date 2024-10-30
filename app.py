@@ -399,11 +399,13 @@ def generate_batna_document():
     6. NEGOTIATION TACTICS
     [Detail specific tactical recommendations for the negotiation, including opening positions, communication strategies, response scenarios, and timing considerations. The tactics should be aligned with the overall negotiation strategy and designed to maximize the client's chances of achieving a favorable outcome.]
 
-    7. IMPLEMENTATION ROADMAP
-    [Format: numeric list. Instruction: Outline a clear implementation plan for the negotiated agreement, including key milestones, timelines, resource requirements, success metrics, and review points. The roadmap should be realistic and achievable, taking into account the client's capabilities and constraints.]
-
-    8. RECOMMENDATIONS
-    [Provide clear, actionable recommendations for the client, including immediate next steps, critical success factors, resource requirements, and expected outcomes. The recommendations should be based on the insights gained from the analysis and designed to help the client achieve their objectives in the negotiation.]"""
+    7. RECOMMENDATIONS
+    [Provide clear, actionable recommendations for the client, including immediate next steps, critical success factors, resource requirements, and expected outcomes. The recommendations should be based on the insights gained from the analysis and designed to help the client achieve their objectives in the negotiation.]
+    
+    Formating:  
+    -heading"bold and larger than normal text
+    -devider after every of the 8 sections
+    """
     
     formatted_data = "\n\n".join([f"{k.replace('_', ' ').title()}: {v}" 
                                  for k, v in st.session_state.collected_data.items()])
